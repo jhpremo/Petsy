@@ -1,0 +1,70 @@
+/* TODO Add site wide styles */
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.about-links-footer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    font-size: 10px;
+    background-color: rgba(250, 176, 65, 0.822);
+    width: 100%;
+    padding: 30px;
+    margin-bottom: -100px; /* removes empty gap on bottom of footer */
+    color: white;
+    position: absolute;
+    bottom: 0;
+}
+
+.about-links-footer>div>a,
+.about-links-github-icon {
+    color: white;
+}
+
+.about-links-github-icon>a {
+    font-size: 35px;
+    margin-left: auto;
+}
+
+.about-links-creators {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    background-color: rgb(230, 160, 55);
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 15px;
+}
+
+.about-links-creators>a {
+    margin-left: 3px;
+}
+
+
+/* keeps footer on bottom */
+html {
+    height:100%
+}
+body>div {
+    min-height:100%;
+}
+
+body {
+    min-height:100%;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+hr {
+    /* border-color: rgb(96, 96, 96);
+    background-color: rgb(96, 96, 96); */
+    border: 1px solid rgb(215, 215, 215);
+}
+
+.ReactModal__Overlay {
+    z-index: 3;
+}
