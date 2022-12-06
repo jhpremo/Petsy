@@ -4,6 +4,7 @@ Petsy is an e-commerce platform that is inspired by Esty. Petsy makes it easier 
 The BnB is inspired by AirBnB, an online marketplace that allows users to list and rent out their homes or other properties for short term rent.
 
 [Live Site](https://aa-petsy-project.onrender.com/)
+
 [Group Project Repo](https://github.com/jhpremo/Petsy-group-project)
 
 ## Wiki Link
