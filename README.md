@@ -5,6 +5,7 @@ The BnB is inspired by AirBnB, an online marketplace that allows users to list a
 
 [Live Site](https://aa-petsy-project.onrender.com/)
 
+[Group Project Repo](https://github.com/jhpremo/Petsy-group-project)
 
 ## Wiki Link
 [Link to Wiki](https://github.com/jhpremo/Petsy-group-project/wiki)
