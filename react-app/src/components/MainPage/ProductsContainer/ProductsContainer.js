@@ -8,8 +8,8 @@ import slidingWindowPages from "./utils/slidingWindowPages"
 import "./ProductsContainer.css";
 
 export default function ProductsContainer({ isSearch }) {
-    const [numResults, products] = useSelector(state => [state.items.numResults, state.items])
-
+    const [numResults, products] = useSelector(state => [state.items.numResults, state.items] || 60)
+    const [randomPage, setRandomPage] = useState((Math.floor(Math.random() * 100) % 5) + 1)
     const [page, setPage] = useState(1);
     const [pageNums, setPageNums] = useState([])
     const [displayPageNums, setDisplayPageNums] = useState([])
@@ -69,15 +69,46 @@ export default function ProductsContainer({ isSearch }) {
                 }
             }
             setQuery(query)
+        } else {
+            console.log(randomPage)
+            query.page = randomPage
+            query.pageSize = 12
         }
 
         dispatch(getProducts(query)).then(() => setIsLoaded(true))
-
+        console.log(location, numResults)
     }, [location, numResults])
 
 
     return (
         <>
+            {!isSearch &&
+                <div className="mainpage-top-bar">
+                    <div className="mainpage-top-bar-header"><h2>Welcome to Petsy</h2></div>
+                    <div className="mainpage-top-bar-categories-wrapper">
+                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=dog">
+                            <img src="https://petsy-project.s3.amazonaws.com/c157526e838c447b8e86077181e5bd70.jpg" />
+                            <h3>Dogs</h3>
+                        </NavLink>
+                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=cat">
+                            <img src="https://petsy-project.s3.amazonaws.com/d2612064bb974fb4af66d20767613506.jpg" />
+                            <h3>Cats</h3>
+                        </NavLink>
+                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=bird+parrot">
+                            <img src="https://petsy-project.s3.amazonaws.com/45bbda3ee18b49bf99c577c4535b9f4a.jpg" />
+                            <h3>Birds</h3>
+                        </NavLink>
+                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=treats+food">
+                            <img src="https://petsy-project.s3.amazonaws.com/1c930544b78a44b5b4d48be35e1de1a6.jpg" />
+                            <h3>Treats</h3>
+                        </NavLink>
+                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=jacket+robe+costume+hoodie">
+                            <img src="https://petsy-project.s3.amazonaws.com/a9aaadc7885c4db5af4a52280934a3cd.jpg" />
+                            <h3>Clothes</h3>
+                        </NavLink>
+                    </div>
+                </div>}
+            {/* {!isSearch && <h3 className="featured-items">Featured items</h3>} */}
             {isLoaded && (Object.entries(products).length > 1 &&
                 <ul id="products-container-products-container">
                     {
@@ -90,7 +121,7 @@ export default function ProductsContainer({ isSearch }) {
                 </ul> || <div className="products-container-no-results"><h1 ><i className="fa-solid fa-bone"></i><span className="products-container-no-results-message">no results</span><i className="fa-solid fa-bone"></i></h1> <img src="https://i.pinimg.com/564x/2d/37/ab/2d37ab595697d54c61094894cdbca161.jpg" /></div>)
             }
             {
-                isSearch &&
+                isSearch && isLoaded &&
                 <div className="products-container-navlinks">
                     {prefix && <span className="products-container-dots-before">...</span>}
                     {
