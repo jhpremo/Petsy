@@ -11,6 +11,7 @@ const ListProductForm = () => {
     const [urls, setUrls] = useState("");
     const [errors, setErrors] = useState([]);
     const [submitted, setSubmitted] = useState(false)
+    const [files, setFiles] = useState(false)
     const dispatch = useDispatch()
     const history = useHistory()
     const user = useSelector((state) => state.session.user)
@@ -25,24 +26,24 @@ const ListProductForm = () => {
     useEffect(() => {
         let errorsArr = []
         let parsedPrice = parseFloat(price)
-        let urlArr = urls.split(/\r?\n/)
+        // let urlArr = urls.split(/\r?\n/)
 
-        const validateUrl = (urls) => {
-            let check = true
-            urls.forEach(url => {
-                if (!url || !url.includes('.') || url.length > 2048) check = false
-            });
-            return check
-        }
+        // const validateUrl = (urls) => {
+        //     let check = true
+        //     urls.forEach(url => {
+        //         if (!url || !url.includes('.') || url.length > 2048) check = false
+        //     });
+        //     return check
+        // }
 
         if (!(name && description && price)) errorsArr.push("All fields must be filled out")
         if (name && name.length > 75) errorsArr.push("Product name must be less than 50 characters")
         if (description && description.length > 2000) errorsArr.push("Product description must be less than 255 characters")
         if (price && (!parsedPrice || !Number(price) || parsedPrice <= 0)) errorsArr.push('Price must be a positive number')
-        if (urls && !validateUrl(urlArr)) errorsArr.push('Each image must have a valid url seperated by a comma')
+        if (files && !files.length) errorsArr.push('At least one jpg or png image is required')
 
         setErrors(errorsArr)
-    }, [name, description, price, urls])
+    }, [name, description, price, urls, files])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -51,7 +52,26 @@ const ListProductForm = () => {
             return
         }
 
-        let urlStr = urls.split(/\r?\n/).join(', ')
+        let urlArr = []
+
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i]
+            if (file !== null) {
+                const formData = new FormData();
+                formData.append("image", file);
+                const res = await fetch('/api/items/images', {
+                    method: "POST",
+                    body: formData,
+                });
+                if (res.ok) {
+                    let awsImage = await res.json();
+                    urlArr.push(awsImage?.url)
+                }
+            }
+        }
+
+
+        let urlStr = urlArr.join(',')
 
         let payload = {
             name,
@@ -62,6 +82,10 @@ const ListProductForm = () => {
 
         const item = await dispatch(postItemThunk(payload))
         history.push(`/items/${item.id}`)
+    }
+
+    const updateImage = async (e) => {
+        setFiles(e.target.files);
     }
 
     return (
@@ -112,10 +136,13 @@ const ListProductForm = () => {
                 </div>
                 <div>
                     <label>Image urls (separated by comma)</label>
-                    <textarea
-                        onChange={e => setUrls(e.target.value)}
-                        value={urls}
+                    <input
+                        type="file"
+                        accept=".png, .jpg, .jpeg"
+                        multiple={true}
+                        onChange={updateImage}
                         required
+                        maxLength={2048}
                     />
                 </div>
                 <button type='submit'>Post product</button>
