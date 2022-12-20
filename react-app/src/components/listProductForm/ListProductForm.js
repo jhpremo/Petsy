@@ -135,10 +135,11 @@ const ListProductForm = () => {
                     />
                 </div>
                 <div>
-                    <label>Image urls (separated by comma)</label>
+                    <label>Image upload</label>
                     <input
                         type="file"
                         accept=".png, .jpg, .jpeg"
+                        id="image-upload"
                         multiple={true}
                         onChange={updateImage}
                         required
