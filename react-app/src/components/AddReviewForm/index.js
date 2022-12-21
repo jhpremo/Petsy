@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { addItemReviewThunk } from '../../store/itemReviews'
 import './AddReviewForm.css'
@@ -15,7 +15,7 @@ function AddReviewForm() {
     const [text, setText] = useState("")
     const [errors, setErrors] = useState([])
 
-    useEffect(() => {}, [errors])
+    useEffect(() => { }, [errors])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,7 +45,7 @@ function AddReviewForm() {
                 <h1>Add Your Review</h1>
                 <div className='errors'>
                     {errors.errors && (errors.errors.map((error, ind) => (
-                    <div key={ind}>{error}</div>
+                        <div key={ind}>{error}</div>
                     )))}
                 </div>
                 <div className='your-reviews-input-wrapper'>

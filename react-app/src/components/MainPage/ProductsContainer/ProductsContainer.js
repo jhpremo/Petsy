@@ -9,7 +9,7 @@ import "./ProductsContainer.css";
 
 export default function ProductsContainer({ isSearch }) {
     const [numResults, products] = useSelector(state => [state.items.numResults, state.items] || 60)
-    const [randomPage, setRandomPage] = useState((Math.floor(Math.random() * 100) % 5) + 1)
+    const [randomPage] = useState((Math.floor(Math.random() * 100) % 5) + 1)
     const [page, setPage] = useState(1);
     const [pageNums, setPageNums] = useState([])
     const [displayPageNums, setDisplayPageNums] = useState([])
@@ -20,7 +20,7 @@ export default function ProductsContainer({ isSearch }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
-
+    // console.log(isLoaded)
     useEffect(() => {
         const pageDisplayInfo = slidingWindowPages(pageNums, page);
         setDisplayPageNums(pageDisplayInfo.pages)
@@ -29,6 +29,7 @@ export default function ProductsContainer({ isSearch }) {
     }, [page, pageNums])
 
     useEffect(() => {
+        setIsLoaded(false)
         const query = {};
         const acceptedParams = new Set([
             "q",
@@ -70,14 +71,13 @@ export default function ProductsContainer({ isSearch }) {
             }
             setQuery(query)
         } else {
-            console.log(randomPage)
+            // console.log(randomPage)
             query.page = randomPage
             query.pageSize = 12
         }
 
         dispatch(getProducts(query)).then(() => setIsLoaded(true))
-        console.log(location, numResults)
-    }, [location, numResults])
+    }, [location, dispatch, isSearch, page, pageNums, randomPage])
 
 
     return (
@@ -86,24 +86,24 @@ export default function ProductsContainer({ isSearch }) {
                 <div className="mainpage-top-bar">
                     <div className="mainpage-top-bar-header"><h2>Welcome to Petsy</h2></div>
                     <div className="mainpage-top-bar-categories-wrapper">
-                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=dog">
-                            <img src="https://petsy-project.s3.amazonaws.com/c157526e838c447b8e86077181e5bd70.jpg" />
+                        <NavLink className='mainpage-top-bar-category' to="/search?q=dog">
+                            <img alt="dog category" src="https://petsy-project.s3.amazonaws.com/c157526e838c447b8e86077181e5bd70.jpg" />
                             <h3>Dogs</h3>
                         </NavLink>
-                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=cat">
-                            <img src="https://petsy-project.s3.amazonaws.com/d2612064bb974fb4af66d20767613506.jpg" />
+                        <NavLink className='mainpage-top-bar-category' to="/search?q=cat">
+                            <img alt="cat category" src="https://petsy-project.s3.amazonaws.com/d2612064bb974fb4af66d20767613506.jpg" />
                             <h3>Cats</h3>
                         </NavLink>
-                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=bird+parrot">
-                            <img src="https://petsy-project.s3.amazonaws.com/45bbda3ee18b49bf99c577c4535b9f4a.jpg" />
+                        <NavLink className='mainpage-top-bar-category' to="/search?q=bird+parrot">
+                            <img alt="bird category" src="https://petsy-project.s3.amazonaws.com/45bbda3ee18b49bf99c577c4535b9f4a.jpg" />
                             <h3>Birds</h3>
                         </NavLink>
-                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=treats+food">
-                            <img src="https://petsy-project.s3.amazonaws.com/1c930544b78a44b5b4d48be35e1de1a6.jpg" />
+                        <NavLink className='mainpage-top-bar-category' to="/search?q=treats+food">
+                            <img alt="treat category" src="https://petsy-project.s3.amazonaws.com/1c930544b78a44b5b4d48be35e1de1a6.jpg" />
                             <h3>Treats</h3>
                         </NavLink>
-                        <NavLink onClick={() => setIsLoaded(false)} className='mainpage-top-bar-category' to="/search?q=jacket+robe+costume+hoodie">
-                            <img src="https://petsy-project.s3.amazonaws.com/a9aaadc7885c4db5af4a52280934a3cd.jpg" />
+                        <NavLink className='mainpage-top-bar-category' to="/search?q=jacket+robe+costume+hoodie">
+                            <img alt="cloathing category" src="https://petsy-project.s3.amazonaws.com/a9aaadc7885c4db5af4a52280934a3cd.jpg" />
                             <h3>Clothes</h3>
                         </NavLink>
                     </div>
@@ -116,11 +116,13 @@ export default function ProductsContainer({ isSearch }) {
                             if (id !== "numResults") {
                                 return <Product key={id} product={product} id={id} />
                             }
+                            else return null
                         })
                     }
-                </ul> || <div className="products-container-no-results"><h1 ><i className="fa-solid fa-bone"></i><span className="products-container-no-results-message">no results</span><i className="fa-solid fa-bone"></i></h1> <img src="https://i.pinimg.com/564x/2d/37/ab/2d37ab595697d54c61094894cdbca161.jpg" /></div>)
+                </ul>)
             }
-            {
+            {isLoaded && !(Object.entries(products).length > 1) && <div className="products-container-no-results"><h1 ><i className="fa-solid fa-bone"></i><span className="products-container-no-results-message">no results</span><i className="fa-solid fa-bone"></i></h1> <img alt="sad dog" src="https://i.pinimg.com/564x/2d/37/ab/2d37ab595697d54c61094894cdbca161.jpg" /></div>
+            }            {
                 isSearch && isLoaded &&
                 <div className="products-container-navlinks">
                     {prefix && <span className="products-container-dots-before">...</span>}

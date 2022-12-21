@@ -28,7 +28,7 @@ export const getProducts = (queryParams) => async (dispatch) => {
 
 
     const normalizedProducts = products.reduce((acc, product) => {
-        acc[product.id] = {...(delete product.id && product)}
+        acc[product.id] = { ...(delete product.id && product) }
         return acc
     }, {})
 
@@ -37,9 +37,17 @@ export const getProducts = (queryParams) => async (dispatch) => {
     dispatch(populateProducts(normalizedProducts))
 }
 
-export default function reducer(state=initialState, action) {
+const CLEAR_PRODUCTS = 'items/CLEAR_PRODUCTS'
+
+export const clearItemStore = () => {
+    return { type: CLEAR_PRODUCTS }
+}
+
+export default function reducer(state = initialState, action) {
     if (action.type === GET_PRODUCTS) {
         return action.products
+    } else if (action.type === CLEAR_PRODUCTS) {
+        return initialState
     }
 
     return state

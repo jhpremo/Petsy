@@ -34,7 +34,7 @@ function ItemDetailsPage() {
       }
     }
     getData()
-  }, [dispatch, itemId]);
+  }, [dispatch, itemId, history]);
 
   const item = useSelector((state) => state.itemPage);
   const itemReviews = useSelector((state) => state.itemReviews);
@@ -188,14 +188,14 @@ function ItemDetailsPage() {
                         <div key={idx}>
                           <img
                             src={url}
-                            alt='item picture'
+                            alt='item'
                             id={`img-page-tile-${idx}`}
                             onError={e => {
                               e.target.src = "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"
                               e.onerror = null
                             }}
                             className={
-                              idx == 0
+                              idx === 0
                                 ? "items-details-page-images-container-tiles-images active-tile-image"
                                 : "items-details-page-images-container-tiles-images"
                             } //sets active tile image to first image
@@ -206,16 +206,16 @@ function ItemDetailsPage() {
                   <div id='items-details-page-images-container-main'>
                     {item.imageURLs.length > 0 && (
                       <div
-                      className='items-details-page-arrow'
-                      onClick={handleLeftArrow}>
-                      <i className='fa-solid fa-angle-left' />
-                    </div>
+                        className='items-details-page-arrow'
+                        onClick={handleLeftArrow}>
+                        <i className='fa-solid fa-angle-left' />
+                      </div>
                     )}
                     {item.imageURLs.length <= 0 && (
                       <img
-                      src={"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
-                      alt='item'
-                      className="items-details-page-images-container-main-images show"
+                        src={"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"}
+                        alt='item'
+                        className="items-details-page-images-container-main-images show"
                       ></img>
                     )}
                     {item.imageURLs.length > 0 &&
@@ -230,7 +230,7 @@ function ItemDetailsPage() {
                               e.onerror = null
                             }}
                             className={
-                              idx == 0
+                              idx === 0
                                 ? "items-details-page-images-container-main-images show"
                                 : "items-details-page-images-container-main-images"
                             } //sets active main image to first image
@@ -239,10 +239,10 @@ function ItemDetailsPage() {
                       ))}
                     {item.imageURLs.length > 0 && (
                       <div
-                      className='items-details-page-arrow'
-                      onClick={handleRightArrow}>
-                      <i className='fa-solid fa-angle-right' />
-                    </div>
+                        className='items-details-page-arrow'
+                        onClick={handleRightArrow}>
+                        <i className='fa-solid fa-angle-right' />
+                      </div>
                     )}
                   </div>
                 </div>
@@ -264,7 +264,7 @@ function ItemDetailsPage() {
                   </div>
                   <NavLink to={{ pathname: `/items/${itemId}/add-review` }}>
                     <button id='create-review-button'>
-                        Create Review for this Item
+                      Create Review for this Item
                     </button>
                   </NavLink>
                   {itemReviews &&
@@ -327,23 +327,23 @@ function ItemDetailsPage() {
                     </div>
                   )}
                   <div id='items-details-page-main-shop-reviews-images-container-wrapper'>
-                      {sellerReviewImages.length > 0 &&
+                    {sellerReviewImages.length > 0 &&
                       <>
                         <div id="item-details-page-main-shop-reviews-images-container-left" onClick={handleScrollLeft}><i className='fa-solid fa-angle-left' /></div>
                         <div id="item-details-page-main-shop-reviews-images-container-right" onClick={handleScrollRight}><i className='fa-solid fa-angle-right' /></div>
                       </>
-                      }
+                    }
                     <div id='items-details-page-main-shop-reviews-images-container' ref={scrollElem}>
                       {sellerReviewImages.length > 0 &&
-                          sellerReviewImages.map((img) => (
-                            <div key={img.id}>
-                              <img
-                                src={img.url}
-                                alt={`Image: Review ${img.reviewId}`} //to pass review id to modal if img clicked
-                                className='items-details-page-main-shop-reviews-images'
-                                onClick={openModal}></img>
-                            </div>
-                          ))
+                        sellerReviewImages.map((img) => (
+                          <div key={img.id}>
+                            <img
+                              src={img.url}
+                              alt={`Image: Review ${img.reviewId}`} //to pass review id to modal if img clicked
+                              className='items-details-page-main-shop-reviews-images'
+                              onClick={openModal}></img>
+                          </div>
+                        ))
                       }
                     </div>
                   </div>
@@ -372,15 +372,15 @@ function ItemDetailsPage() {
                 </div>
                 {sessionUser && sessionUser.id === item.sellerId && (
                   <div id='items-details-page-edit-links'>
-                      <NavLink
-                        to={{
-                          pathname: `/items/${itemId}/edit-item`,
-                          state: { ...item }
-                        }}>
-                        <button id='edit-item-button'>
-                          Edit Item
-                        </button>
-                      </NavLink>
+                    <NavLink
+                      to={{
+                        pathname: `/items/${itemId}/edit-item`,
+                        state: { ...item }
+                      }}>
+                      <button id='edit-item-button'>
+                        Edit Item
+                      </button>
+                    </NavLink>
                     <button
                       id='delete-item-button'
                       onClick={handleDelete}>

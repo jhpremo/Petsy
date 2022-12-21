@@ -13,7 +13,6 @@ import ListProductForm from "./components/listProductForm/ListProductForm";
 import ItemDetailsPage from "./components/ItemDetialsPage";
 import EditItemForm from "./components/EditItemForm";
 import AddReviewForm from "./components/AddReviewForm";
-import AddToCart from "./components/AddToCart";
 import ShoppingCart from "./components/ShoppingCart";
 import YourReviews from "./components/YourReviews/YourReviews";
 import YourOrders from "./components/YourOrders/YourOrders";

@@ -15,7 +15,7 @@ function EditItemForm() {
 
     //Sends user to error page if he is not seller of product
     if (location.state) {
-        if (location.state.sellerId != sessionUser.id) history.push('/403')
+        if (location.state.sellerId !== sessionUser.id) history.push('/403')
     }
 
     //Set name, price and description from passed down data from parent if available
@@ -31,7 +31,7 @@ function EditItemForm() {
             item = await dispatch(getItemDetailsThunk(itemId))
 
             //Sends user to error page if he is not seller of product
-            if(item.sellerId!= sessionUser.id) history.push('/403')
+            if (item.sellerId !== sessionUser.id) history.push('/403')
 
             await setName(item.name)
             await setPrice(item.price)
@@ -39,7 +39,7 @@ function EditItemForm() {
         })()
     }
 
-    useEffect(() => {}, [errors])
+    useEffect(() => { }, [errors])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -69,7 +69,7 @@ function EditItemForm() {
                 <h1>Edit Your Item</h1>
                 <div className='errors'>
                     {errors.errors && (errors.errors.map((error, ind) => (
-                    <div key={ind}>{error}</div>
+                        <div key={ind}>{error}</div>
                     )))}
                 </div>
                 <div>
@@ -104,7 +104,7 @@ function EditItemForm() {
                         maxLength={2000}
                     />
                 </div>
-                <button  type='submit'>Confirm Changes</button>
+                <button type='submit'>Confirm Changes</button>
             </form>
             <button className='cancel-btn' onClick={() => history.push(`/items/${itemId}`)}>Cancel</button>
         </div>
