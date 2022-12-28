@@ -77,7 +77,7 @@ export default function ProductsContainer({ isSearch }) {
         }
 
         dispatch(getProducts(query)).then(() => setIsLoaded(true))
-    }, [location, dispatch, isSearch, page, pageNums, randomPage])
+    }, [location, dispatch, isSearch, page, numResults, pageNums, randomPage])
 
 
     return (

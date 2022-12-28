@@ -71,6 +71,11 @@ function App() {
           <ProductsContainer isSearch={true} />
         </Route>
         <Route
+          path='/search'
+          exact={true}>
+          <ProductsContainer isSearch={false} />
+        </Route>
+        <Route
           exact
           path='/items/:itemId/edit-item'>
           <EditItemForm />
