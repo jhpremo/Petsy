@@ -38,7 +38,7 @@ Petsy is an e-commerce platform that is inspired by Esty. Petsy makes it easier 
 
 
 ## Landing Page
-![landing page](./landing-page.png)
+![landing page](./landing-page.PNG)
 
 
 ##  How to Launch the Application Locally
