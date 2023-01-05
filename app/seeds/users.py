@@ -57,7 +57,7 @@ def seed_users():
             ]
         },
         {
-            "user_id": 2,
+            "user_id": 1,
             "name": "Personalized Dog Robe",
             "price": 28,
             "description": "Pamper your pup in true spa-like style with this cuddly soft robe featuring a cozy hood and an absorbent quick-drying design",
@@ -361,6 +361,7 @@ def seed_users():
             "product_images": ["https://assets.petco.com/petco/image/upload/c_pad,dpr_1.0,f_auto,q_auto,h_468,w_500/c_pad,h_468,w_500/1349074-center-5", "https://assets.petco.com/petco/image/upload/c_pad,dpr_1.0,f_auto,q_auto,h_468,w_500/c_pad,h_468,w_500/1349074-center-4"],
             "reviews": [
                 {
+                "demo" : True,
                 "rating": 1 ,
                 "text": "My frenchie puppy had the squeaker punctured in about 2 minutes and the whole thing ripped open in the first hour.",
                 "review_images": ["https://photos-us.bazaarvoice.com/photo/2/cGhvdG86cGV0Y28/05b1f7fa-fd2a-52d8-a6df-e48e24a8bd80"]
@@ -423,6 +424,7 @@ def seed_users():
             "product_images": ["https://assets.petco.com/petco/image/upload/c_pad,dpr_1.0,f_auto,q_auto,h_468,w_500/c_pad,h_468,w_500/l_sale-badge,fl_relative,w_0.12,g_north_west,e_sharpen/l_bypetco-badge,fl_relative,w_0.20,g_south_east,e_sharpen/3323825-center-1", "https://assets.petco.com/petco/image/upload/c_pad,dpr_1.0,f_auto,q_auto,h_468,w_500/c_pad,h_468,w_500/3323825-center-4"],
             "reviews": [
                 {
+                "demo" : True,
                 "rating": 5,
                 "text": "My dog loves this bed and the bone pillow that comes with it. Its the cutest pink. The pillow and blanket are an added bonus.",
                 "review_images": []
@@ -523,6 +525,7 @@ def seed_users():
             "product_images": ["https://assets.petco.com/petco/image/upload/c_pad,dpr_1.0,f_auto,q_auto,h_468,w_500/c_pad,h_468,w_500/3568013-center-2", "https://assets.petco.com/petco/image/upload/c_pad,dpr_1.0,f_auto,q_auto,h_468,w_500/c_pad,h_468,w_500/3568013-center-10"],
             "reviews": [
                 {
+                "demo" : True,
                 "rating": 5,
                 "text": "I just bought this a few days ago. It’s soft and doesn’t seem to bug my dog to wear it, but it does run small. ",
                 "review_images": ["https://photos-us.bazaarvoice.com/photo/2/cGhvdG86cGV0Y28/39b30263-1b21-54e6-a822-0c7cde85d0ee"]
@@ -554,7 +557,7 @@ def seed_users():
             ]
         },
         {
-            "user_id": 7,
+            "user_id": 1,
             "name": "LARGE parrot TOY ** FIRECRACKER ** perfect for pluckers and foragers",
             "price": 27.00,
             "description": "This large toy includes lots of birdie bagels, crinkle paper, finger traps, marbella beads and a roll of paper on an extra large birdie bagel base. A must have for parrots that pluck!! Comes with a pear hook for hanging.",
@@ -1150,7 +1153,7 @@ def seed_users():
             ]
         },
         {
-            'user_id': 12,
+            'user_id': 1,
             'name': 'Indestructible Chew Toy for Dogs',
             'price': 4.75,
             'description': "This Chew toy is one of a kind! It is made of natural rubber and is highly indestructible. It is able to withstand the force of a 220-pound steel brick.",
@@ -1313,7 +1316,14 @@ def seed_users():
         if new_id > 13:
             new_id = 12
 
+
         for review in seed["reviews"]:
+            new_id = new_product.user_id + 1
+            if new_id > 13:
+                new_id = 12
+            if review.get('demo'):
+                new_id = 1
+
             new_review = Review(
                 user_id = new_id,
                 product_id=new_product.id,
